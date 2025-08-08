@@ -1,11 +1,14 @@
 package aut.ap;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import aut.ap.Cli.Commands;
+import aut.ap.service.EmailService;
+import aut.ap.service.UserService;
+
 public class Main {
     public static void main(String[] args) {
-        SessionFactory sessionFactory = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .buildSessionFactory();
-        sessionFactory.close();
+        UserService userService = new UserService();
+        EmailService emailService = new EmailService();
+        Commands commands = new Commands(userService, emailService);
+
+        commands.start();
     }
 }

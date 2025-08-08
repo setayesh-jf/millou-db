@@ -6,7 +6,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "emails")
@@ -32,15 +34,16 @@ public class Email extends UniEntity {
     @Column(name = "email_body", nullable = false)
     private String body;
 
-    @Column(nullable = false)
+    @Column(name = "sent_at", nullable = false)
     private LocalDateTime sentAt = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "original_email_id")
+    @JoinColumn(name = "original_email_id", nullable = true)
     private Email originalEmail;
 
     public Email() {
         this.code = generateRandomCode();
+        this.originalEmail = null;
     }
 
     private String generateRandomCode() {
@@ -119,13 +122,17 @@ public class Email extends UniEntity {
 
 
     public void addRecipient(User user) {
-        EmailRecipient recipient = new EmailRecipient();
-        recipient.setEmail(this);
-        recipient.setRecipient(user);
-        this.recipients.add(recipient);
+        this.recipients.add(new EmailRecipient(this, user));
     }
 
 
+    public Set<User> getRecipientUsers() {
+        Set<User> users = new HashSet<>();
+        for (EmailRecipient r : recipients) {
+            users.add(r.getRecipient());
+        }
+        return users;
+    }
 
     @Override
     public String toString() {

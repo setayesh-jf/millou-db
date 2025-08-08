@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import aut.ap.framework.UniEntity;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -20,12 +21,11 @@ public class User extends UniEntity {
     @Column(name = "user_password", nullable = false)
     private String password;
 
-
     @OneToMany(mappedBy = "recipient")
     private List<EmailRecipient> receivedEmails = new ArrayList<>();
 
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
@@ -52,17 +52,29 @@ public class User extends UniEntity {
     public void setPassword(String password){
         this.password = password;
     }
-
-
-
     public User() {
 
     }
 
-    public User(String name, String email, String password){
+
+    public User(String name, String email, String password) {
         this.name = name;
-        this.email = email;
+        this.email = email.contains("@") ? email : email + "@milou.com";
         this.password = password;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
 
@@ -71,8 +83,7 @@ public class User extends UniEntity {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", email=" + email + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
-}
 

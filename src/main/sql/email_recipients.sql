@@ -7,3 +7,11 @@ create table email_recipients (
     foreign key (email_id) references emails(id),
     foreign key (user_id) references users(id)
 );
+
+alter table email_recipients modify column read_at timestamp null;
+
+select is_read, read_at
+from email_recipients
+where email_id = ? and user_id = ?;
+
+select * from email_recipients;
