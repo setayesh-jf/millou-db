@@ -49,10 +49,10 @@ public class EmailService extends ServiceBase<Email> {
 
     private Email fetchByEmailCode(String code, Session session) {
         Email email = session.createNativeQuery(
-                        "select * from email where code = :code",
-                        Email.class)
+                        "select * from emails where code = :code", Email.class)
                 .setParameter("code", code)
                 .uniqueResult();
+
 
         if (email == null) {
             throw new EmailNotFoundException(code);
@@ -71,21 +71,21 @@ public class EmailService extends ServiceBase<Email> {
             switch (EmailCategory.toLowerCase()) {
                 case "all":
                     emails = session.createNativeQuery(
-                                    "select * from email_recipient where recipient_id = :userId", EmailRecipient.class)
+                                    "select * from email_recipients where recipient_id = :userId", EmailRecipient.class)
                             .setParameter("userId", user.getId())
                             .getResultList();
                     break;
 
                 case "unread":
                     emails = session.createNativeQuery(
-                                    "select * from email_recipient where recipient_id = :userId and is_read = false", EmailRecipient.class)
+                                    "select * from email_recipients where recipient_id = :userId and is_read = false", EmailRecipient.class)
                             .setParameter("userId", user.getId())
                             .getResultList();
                     break;
 
                 case "sent":
                     List<Email> sentEmails = session.createNativeQuery(
-                                    "select * from email where sender_id = :userId", Email.class)
+                                    "select * from emails where sender_id = :userId", Email.class)
                             .setParameter("userId", user.getId())
                             .getResultList();
 
@@ -122,7 +122,7 @@ public class EmailService extends ServiceBase<Email> {
             Email email = fetchByEmailCode(code, session);
 
             List<EmailRecipient> recipients = session.createNativeQuery(
-                            "select * from email_recipient where email_id = :emailId", EmailRecipient.class)
+                            "select * from email_recipients where email_id = :emailId", EmailRecipient.class)
                     .setParameter("emailId", email.getId())
                     .getResultList();
 
@@ -182,7 +182,7 @@ public class EmailService extends ServiceBase<Email> {
             Email originalEmail = fetchByEmailCode(originalCode, session);
 
             List<EmailRecipient> recipients = session.createNativeQuery(
-                            "select * from email_recipient where email_id = :emailId", EmailRecipient.class)
+                            "select * from email_recipients where email_id = :emailId", EmailRecipient.class)
                     .setParameter("emailId", originalEmail.getId())
                     .getResultList();
 
