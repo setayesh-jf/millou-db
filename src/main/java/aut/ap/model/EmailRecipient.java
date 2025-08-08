@@ -75,4 +75,16 @@ public class EmailRecipient extends UniEntity{
         this.isRead = true;
         this.readAt = LocalDateTime.now();
     }
+
+
+    public EmailRecipient() {
+    }
+
+
+    public EmailRecipient(Email email, User recipient) {
+        this.email = email;
+        this.recipient = recipient;
+        this.isRead = false;
+        this.readAt = null;
+    }
 }

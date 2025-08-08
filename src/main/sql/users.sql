@@ -4,3 +4,10 @@ create table users (
     user_email nvarchar(100) not null unique ,
     user_password nvarchar(255) not null
 );
+
+
+select name, user_email
+from users
+where id = ?;
+
+select * from users;
