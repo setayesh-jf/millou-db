@@ -1,4 +1,4 @@
-package Cli;
+package aut.ap.Cli;
 
 
 public enum UserCommands{

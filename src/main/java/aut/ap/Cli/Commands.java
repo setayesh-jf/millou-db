@@ -1,4 +1,4 @@
-package Cli;
+package aut.ap.Cli;
 
 
 import aut.ap.model.User;
