@@ -86,4 +86,4 @@ public class User extends UniEntity {
                 ", email='" + email + '\'' +
                 '}';
     }
-}
+
