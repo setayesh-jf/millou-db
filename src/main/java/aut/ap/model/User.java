@@ -30,18 +30,17 @@ public class User extends UniEntity {
     }
 
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
 
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
 
-
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -49,9 +48,10 @@ public class User extends UniEntity {
         this.email = email.contains("@") ? email : email + "@milou.com";
     }
 
-    public void setPassword(String password){
+    public void setPassword(String password) {
         this.password = password;
     }
+
     public User() {
 
     }
@@ -86,4 +86,5 @@ public class User extends UniEntity {
                 ", email='" + email + '\'' +
                 '}';
     }
+}
 

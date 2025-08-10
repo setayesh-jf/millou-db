@@ -42,14 +42,15 @@ public abstract class ServiceBase<T extends UniEntity> {
 
     public List<T> fetchAll() {
         try (Session session = getSessionFactory().openSession()) {
-            return session.createQuery("FROM " + clazz.getSimpleName(), clazz).list();
+            return session.createSelectionQuery("FROM " + clazz.getSimpleName(), clazz)
+                    .getResultList();
         }
     }
 
     public List<T> fetchAll(Function<Session, RootGraph<T>> rootGraphCreator) {
         try (Session session = getSessionFactory().openSession()) {
-            EntityGraph<T> graph = rootGraphCreator.apply(session);
-            return session.createQuery("FROM " + clazz.getSimpleName(), clazz)
+            RootGraph<T> graph = rootGraphCreator.apply(session);
+            return session.createSelectionQuery("FROM " + clazz.getSimpleName(), clazz)
                     .setEntityGraph(graph, GraphSemantic.LOAD)
                     .getResultList();
         }
