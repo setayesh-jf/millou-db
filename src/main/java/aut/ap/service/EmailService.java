@@ -111,6 +111,8 @@ public class EmailService extends ServiceBase<Email> {
                     System.out.println("+ " + email.getSender().getEmail() + " - " + email.getSubject() + " (" + email.getCode() + ")");
                 }
             }
+        }catch (Exception e) {
+            System.out.println("Error while viewing emails: " + e.getMessage());
         }
     }
 
