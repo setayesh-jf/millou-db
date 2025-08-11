@@ -10,4 +10,10 @@ select name, user_email
 from users
 where id = ?;
 
+
+select
+name, user_email
+from users
+group by user_email, name;
+
 select * from users;
