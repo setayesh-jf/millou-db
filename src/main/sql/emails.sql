@@ -18,3 +18,12 @@ where sender_id = ?;
 desc emails;
 
 select * from emails;
+
+select original_email_id  from emails
+group by original_email_id;
+
+select code from emails
+where id <= 10;
+
+select e.original_email_id from emails e
+left join email_recipients er   on er.id = er.user_id;
