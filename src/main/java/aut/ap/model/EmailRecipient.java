@@ -4,6 +4,7 @@ package aut.ap.model;
 import jakarta.persistence.*;
 import aut.ap.framework.UniEntity;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "email_recipients")
@@ -78,6 +79,22 @@ public class EmailRecipient extends UniEntity{
 
 
     public EmailRecipient() {
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EmailRecipient)) return false;
+        EmailRecipient that = (EmailRecipient) o;
+        return Objects.equals(email, that.email) &&
+                Objects.equals(recipient, that.recipient);
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, recipient);
     }
 
 
